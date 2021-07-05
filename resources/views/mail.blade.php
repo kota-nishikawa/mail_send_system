@@ -14,19 +14,23 @@
         <input type="text" class="form-control" id="subject" name="subject"  value="{{ $subject }}" placeholder="name@example.com">
       </div>
       <div class="mb-3">
+        <label for="working_day" class="form-label">勤務時間</label>
+        <select name="working_day" class="">
+          @for ($i = 18; $i < 24; $i++)
+          @if ($i == 19)
+          <option value="{{ $working_day }} 10:00~{{ $i }}:00" selected >10:00~{{ $i }}:00</option>
+
+          @else
+          <option value="{{ $working_day }} 10:00~{{ $i }}:00"  >10:00~{{ $i }}:00</option>
+          @endif
+          @endfor
+        </select>
+      </div>
+      <div class="mb-3">
         <label for="mailbody" class="form-label">Example textarea</label>
         {{-- 日報によって変える --}}
-        <textarea class="form-control" style='white-space: pre-wrap;' id="mailbody" name="mailbody" rows="20">以下、日報になります。
-            １）連絡事項等
-            なし
-            ２）今日の業務内容
-            　
-            　【MDP】（h）
-            　・ミニアプリ
-            　
-            ３）翌営業日の業務内容
-            　
-            ４）課題</textarea>
+        <textarea class="form-control" style='white-space: pre-wrap;' id="mailbody" name="mailbody" rows="20">
+        </textarea>
       </div>
       <button type="submit" class="btn btn-primary">送信</button>
 

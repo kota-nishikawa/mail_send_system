@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Mail;  // ファサードを読み込み
 use Carbon\Carbon;
 use Illuminate\Http\Request; // requestには必要
 use App\Mail\HelloEmail;
+use App\Models\SpreadSheet;
 
 
 
@@ -12,7 +13,23 @@ class mailController extends Controller
 {
     public function send(Request $request)
     {
-        // メールに表示する内容を設定
+        $spread_sheet = new SpreadSheet();
+
+        // dd($request->all());
+
+        $working_day = explode(" ", $request['working_day']);
+        $working_day[0] = date('n月j日', strtotime($working_day[0]));
+        $working_time =   explode("~", $working_day[1]);
+        // スプレッドシートに格納するテストデータです
+        $insert_data = [
+            'start_time' => $working_time[0],
+            'end_time' => $working_time[1],
+            'working_day' => $working_day[0],
+        ];
+
+        $spread_sheet->insert_spread_sheet($insert_data);
+
+        メールに表示する内容を設定
         $data = array();
         $data['to'] = $request['mailaddress'];
         $data['subject'] = $request['subject'];
@@ -28,8 +45,9 @@ class mailController extends Controller
         // $datetime = new Carbon();
         // $today = Carbon::today();
         // $subject = Carbon::now()->format('m/d');
-        $subject = 'yyyy'.Carbon::now()->format('m/d');
-        return view('mail',['subject' => $subject]);
+        $subject = Carbon::now()->format('m/d');
+        $working_day = Carbon::now()->format('m/d');
+        return view('mail',['subject' => $subject,'working_day' => $working_day]);
 
     }
 }
