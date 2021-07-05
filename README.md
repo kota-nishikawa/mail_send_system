@@ -1,6 +1,6 @@
 # mail_send_system
 
-gmailサーバを使用して、メール送信ができます。
+gmailサーバを使用して、メール送信ができるのと、スプレッドシートと連携して更新できるようにしました。
 
 envに以下を編集<br>
 MAIL_DRIVER=smtp<br>
